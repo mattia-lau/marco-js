@@ -1,5 +1,5 @@
 {
-  "name": "actionjs",
+  "name": "marco-js",
   "version": "1.0.0",
   "description": "command line for node",
   "main": "dist/index.js",

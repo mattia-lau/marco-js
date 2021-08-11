@@ -1,5 +1,5 @@
 <p align="center">
-  <b>Action.JS</b>
+  <b>Marco Js</b>
 </p>
 <p align="center">
   A lightweight Command Line Interface builder for TypeScript
@@ -24,7 +24,7 @@ yarn ts-node main.ts migration --from 1628700454716
 
 ```ts
 // migration.action.ts
-import { Action, ActionRunner, Param } from 'actionjs';
+import { Action, ActionRunner, Param } from 'marco-js';
 
 @Action({ command: 'migration' })
 export class Migration extends ActionRunner {
@@ -54,7 +54,7 @@ export class Migration extends ActionRunner {
 
 ```ts
 // main.ts
-import { Explorer } from 'actionjs';
+import { Explorer } from 'marco-js';
 import { Migration } from './migration.action';
 
 const bootstrap = async () => {
@@ -68,7 +68,7 @@ bootstrap();
 
 ```ts
 // main.ts
-import { Explorer } from 'actionjs';
+import { Explorer } from 'marco-js';
 import { Migration } from './migration.action';
 
 const bootstrap = async () => {
