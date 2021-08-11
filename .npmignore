@@ -4,3 +4,4 @@
 /.prettierrc
 /tsconfig.json
 /.eslintrc.js
+/example
