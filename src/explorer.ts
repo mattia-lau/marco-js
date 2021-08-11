@@ -1,4 +1,4 @@
-import { isNil } from 'lodash';
+import { isNil } from './utils/is-nil';
 import parse from 'minimist';
 import { context } from './context';
 import {
