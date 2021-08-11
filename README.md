@@ -7,6 +7,13 @@
 
 <hr />
 
+# Installation
+```bash
+yarn add actionjs
+#or
+npm install actionjs
+```
+
 # Example
 
 ```bash
