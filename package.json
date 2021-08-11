@@ -6,6 +6,14 @@
   "types": "dist/index.d.ts",
   "license": "MIT",
   "author": "mattia.lau",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattia-lau/marco-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mattia-lau/marco-js/issues"
+  },
+  "homepage": "https://github.com/mattia-lau/marco-js#readme",
   "keywords": [
     "lightweight version of commander",
     "Node CLI Builder",
