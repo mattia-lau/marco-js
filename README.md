@@ -8,6 +8,7 @@
 <hr />
 
 # Installation
+
 ```bash
 yarn add actionjs
 #or
@@ -20,6 +21,9 @@ npm install actionjs
 # Execute by the following command
 yarn ts-node main.ts migration -f 1628700454716
 yarn ts-node main.ts migration --from 1628700454716
+# Help Menu
+yarn ts-node main.ts -h # For show all the commands with description
+yarn ts-node main.ts migration -h # Show all the options.
 ```
 
 ```ts

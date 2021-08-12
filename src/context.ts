@@ -3,13 +3,13 @@ import { ActionRunner } from './action.runner';
 import { ActionOptions } from './decorators/action.decorator';
 import { Constructor } from './utils/import-class-by-dir';
 
-type Type<T = ActionRunner> = {
+export type ActionContext<T = ActionRunner> = {
   params: ParamPairs[];
   options: ActionOptions;
   Instance: Constructor<T>;
 };
 
-type Context = { actions: Record<string, Type> };
+type Context = { actions: Record<string, ActionContext> };
 
 export const context: Context = {
   actions: {},

@@ -10,6 +10,7 @@ import {
   Constructor,
   importClassesFromDirectories,
 } from './utils/import-class-by-dir';
+import { help } from './help-command';
 
 type ExplorerOptions = {
   actions?: Constructor[];
@@ -31,25 +32,36 @@ export class Explorer {
     const command = argv._[0];
 
     const action = context.actions[command];
-    if (isNil(action)) {
-      throw new Error(`${action} is not yet registered`);
+
+    if (argv['h'] || argv['help'] || isNil(action)) {
+      help(argv._[0]);
+      return;
     }
 
     const { Instance, params } = action;
 
     params.forEach(({ key, options }) => {
-      const { required, name, alias, defaultValue } = options;
-      if (!isNil(argv[key])) {
-        action.Instance.prototype[key] = argv[key];
-      } else if (alias && !isNil(argv[alias])) {
-        action.Instance.prototype[key] = argv[alias];
+      const { required, name, alias, defaultValue, validation, transformer } =
+        options;
+
+      const value = argv[key] || this.getByAlias(argv, alias) || defaultValue;
+
+      if (value !== defaultValue && !isNil(validation)) {
+        const isValid = validation(value);
+
+        if (!isValid) {
+          console.log(`Invalid value for ${key}`);
+          process.exit(1);
+        }
+      }
+
+      if (required && isNil(value)) {
+        throw new Error(`${name} is required`);
       } else {
-        if (!isNil(defaultValue)) {
-          action.Instance.prototype[key] = defaultValue;
+        if (!isNil(transformer)) {
+          action.Instance.prototype[key] = transformer(value);
         } else {
-          if (required) {
-            throw new Error(`${name} is required`);
-          }
+          action.Instance.prototype[key] = value;
         }
       }
     });
@@ -77,5 +89,13 @@ export class Explorer {
 
   private parseArgv() {
     return parse<Record<string, unknown>>(process.argv.slice(2));
+  }
+
+  private getByAlias(object: Record<string, unknown>, alias?: string) {
+    if (isNil(alias)) {
+      return null;
+    }
+
+    return object[alias];
   }
 }

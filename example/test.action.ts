@@ -2,13 +2,16 @@ import { Action, ActionRunner, Param } from '../src';
 
 @Action({ command: 'migration' })
 export class TestAction extends ActionRunner {
-  @Param({ name: 'from', defaultValue: Date.now() })
-  from: number;
+  @Param({
+    name: 'from',
+    defaultValue: Date.now(),
+  })
+  from: string;
 
   async execute() {
     const data = await new Promise((resolve) =>
       setTimeout(() => {
-        resolve([{ id: 1, name: 'Burger' }]);
+        resolve([{ id: this.from, name: 'Burger' }]);
       }, 1000),
     );
 

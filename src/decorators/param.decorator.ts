@@ -2,9 +2,12 @@ import 'reflect-metadata';
 
 export type ParamOptions = {
   name: string;
+  description?: string;
   required?: boolean;
   alias?: string;
   defaultValue?: unknown;
+  validation?: (value: string) => boolean;
+  transformer?: (value: string) => unknown;
 };
 
 export type ParamPairs = {
