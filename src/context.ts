@@ -9,7 +9,7 @@ export type ActionContext<T = ActionRunner> = {
   Instance: Constructor<T>;
 };
 
-type Context = { actions: Record<string, ActionContext> };
+export type Context = { actions: Record<string, ActionContext> };
 
 export const context: Context = {
   actions: {},

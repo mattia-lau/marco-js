@@ -16,5 +16,5 @@
     "baseUrl": "./",
     "incremental": true
   },
-  "exclude": ["node_modules", "test", "dist", "**/*spec.ts", "example"]
+  "include": ["src/**/*.ts", "tests"]
 }
