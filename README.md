@@ -5,45 +5,60 @@
   A lightweight Command Line Interface builder for TypeScript
 </p>
 
+<p align="center">
+  <a href="https://www.npmjs.com/~mattia.lau" target="_blank"><img src="https://img.shields.io/npm/v/marco-js" alt="NPM Version" /></a>
+  <a href="https://www.npmjs.com/~mattia.lau" target="_blank"><img src="https://img.shields.io/npm/l/marco-js" alt="Package License" /></a>
+  <a href="https://www.npmjs.com/~mattia.lau" target="_blank"><img src="https://img.shields.io/npm/dm/marco-js" alt="NPM Downloads" /></a>
+</p>
+
 <hr />
 
 # Installation
 
 ```bash
-yarn add actionjs
+yarn add marco-js
 #or
-npm install actionjs
+npm install marco-js
 ```
 
 # Example
 
 ```bash
 # Execute by the following command
-yarn ts-node main.ts migration -f 1628700454716
-yarn ts-node main.ts migration --from 1628700454716
+yarn ts-node main.ts screen --market stock -l JP
 # Help Menu
 yarn ts-node main.ts -h # For show all the commands with description
-yarn ts-node main.ts migration -h # Show all the options.
+yarn ts-node main.ts screen -h # Show all the options.
 ```
 
 ```ts
-// migration.action.ts
+// screen.action.ts
 import { Action, ActionRunner, Param } from 'marco-js';
 
-@Action({ command: 'migration' })
-export class Migration extends ActionRunner {
-  @Param({ name: 'from', alias: 'f', required: true })
-  from: number;
+@Action({ command: 'screen' })
+export class ScreenTickerAction extends ActionRunner {
+  @Param({
+    name: 'market',
+    alias: 'm'
+    choices: ['stock', 'indice', 'mf'],
+    required: true,
+  })
+  market: string;
 
-  @Param({ name: 'to', alias: 't', defaultValue: Date.now() })
-  to: number;
+  @Param({
+    name: 'location',
+    required: true,
+    alias: 'l',
+    validation: (value) => {
+      return ['US', 'JP', 'EU'].includes(value);
+    },
+  })
+  location: string;
 
   async execute() {
-    const { from, to } = this;
-
     const data = await new Promise((resolve) =>
       setTimeout(() => {
-        resolve([{ id: 1, name: 'Burger' }]);
+        resolve([{ location: this.location, market: this.market }]);
       }, 1000),
     );
 
@@ -59,10 +74,10 @@ export class Migration extends ActionRunner {
 ```ts
 // main.ts
 import { Explorer } from 'marco-js';
-import { Migration } from './migration.action';
+import { ScreenTickerAction } from './screen.action';
 
 const bootstrap = async () => {
-  await new Explorer({ actions: [TestAction] }).execute();
+  await new Explorer({ actions: [ScreenTickerAction] }).execute();
 };
 
 bootstrap();
@@ -86,4 +101,5 @@ bootstrap();
 
 <hr />
 
-Feel free to create an issue for raise out the features that you want to included in this package.
+Feel free to create an issue for raise out the features that you want to included in this package.  
+Please give a `Star` in Git Repository for supporting the contributor

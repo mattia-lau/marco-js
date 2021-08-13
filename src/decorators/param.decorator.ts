@@ -6,6 +6,7 @@ export type ParamOptions = {
   required?: boolean;
   alias?: string;
   defaultValue?: unknown;
+  choices?: unknown[];
   validation?: (value: string) => boolean;
   transformer?: (value: string) => unknown;
 };

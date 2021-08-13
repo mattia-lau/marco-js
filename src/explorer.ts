@@ -41,10 +41,24 @@ export class Explorer {
     const { Instance, params } = action;
 
     params.forEach(({ key, options }) => {
-      const { required, name, alias, defaultValue, validation, transformer } =
-        options;
+      const {
+        required,
+        name,
+        alias,
+        defaultValue,
+        validation,
+        transformer,
+        choices,
+      } = options;
 
       const value = argv[key] || this.getByAlias(argv, alias) || defaultValue;
+
+      if (value !== defaultValue && !isNil(choices)) {
+        if (!choices.includes(value)) {
+          console.log(`${value} is not in ${choices.join(', ')}`);
+          help(argv._[0]);
+        }
+      }
 
       if (value !== defaultValue && !isNil(validation)) {
         const isValid = validation(value);
@@ -56,7 +70,8 @@ export class Explorer {
       }
 
       if (required && isNil(value)) {
-        throw new Error(`${name} is required`);
+        console.log(`${name} is required`);
+        process.exit(1);
       } else {
         if (!isNil(transformer)) {
           action.Instance.prototype[key] = transformer(value);
